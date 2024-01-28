@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,6 +17,85 @@
     scrollbar-width: none;
     /* Firefox */
   }
+}
+
+body {
+  background-color: #1B263B;
+}
+
+.rich-black {
+  background-color: #1B263B;
+}
+
+.oxford-blue {
+  background-color: #1B263B;
+}
+
+.yinmin-blue {
+  background-color: #415A77;
+}
+
+.silver-lake-blue {
+  background-color: #778DA9;
+}
+
+.platinum {
+  background-color: #E0E1DD;
+}
+
+.plat-text {
+  color: #E0E1DD;
+}
+
+.oxford-text {
+  color: #1B263B;
+}
+
+.nice-font {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.hide-scrollbar-y::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(2rem);
+    /* Adjust the distance you want to shift */
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(1rem);
+    /* Starting position of the deselected animation */
+  }
+
+  to {
+    transform: translateX(0);
+    /* Ending position of the deselected animation */
+  }
+}
+
+.cursor-pointer {
+  transition: color 0.3s ease-in-out;
+  /* Adjust the duration and easing function as needed */
+}
+
+.cursor-pointer.selected {
+  color: your-selected-color;
+  animation: slideInRight 0.3s forwards;
+}
+
+
+.cursor-pointer:not(.selected) {
+  animation: slideOutLeft 0.3s ease-in-out forwards;
 }
 
 html {

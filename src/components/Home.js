@@ -1,39 +1,111 @@
+import React from 'react'
+import Card from './Card'
+import Michael from '../assets/michaelwu.png'
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { Element, Link } from 'react-scroll'
+import { experiences, projects } from './Constants';
 
-import { AboutMe } from "./AboutMe"
-import { Experience } from "./Experience"
-import { Projects } from "./Projects"
-import { NavLink } from "./NavLink"
 
-export const Home = () => {
-  const navText = ['About Me', 'Experience', 'Projects']
-  const dest = ['#aboutme', '#experience', '#projects']
+function Home() {
+  const [selectedSection, setSelectedSection] = useState(null);
+
+  const placeholder = {
+    company: "Cornell",
+    title: "Student",
+    startDate: "Aug 2023",
+    endDate: "May 2025",
+    skills: ["1", "2", "3"]
+  }
+
+  const firstP = "Hello! I'm a sophomore at Cornell University, where I am pursuing a major in Computer Science and a minor in Electrical and Computer Engineering. My academic focus revolves around of machine learning, full-stack development, and robotics."
+  const secondP = "Beyond the confines of the classroom, I find joy in maintaining a healthy lifestyle through regular workouts. Additionally, I channel my creativity and passion for technology into my game studio, Wu Studio, where I engage in exciting small projects."
 
   return (
-    <div className="bg-gradient-to-r from-blue-600 from-10% to-blue-800 text-white font-bold">
-      <div className='h-fit fixed top-0 z-50 pt-8 pl-8 pr-8 w-full flex flex-row bg-gradient-to-r from-blue-600 from-10% to-blue-800'>
-        <div className='w-3/6'>
-          Michael Wu
-        </div>
-        <div className='w-3/6 flex flex-row place-content-end space-x-4 '>
-          {
-            navText.map((text, idx) => (
-              <NavLink text={text} destination={dest[idx]} />
-            ))
-          }
-
+    <div className='flex flex-row h-screen nice-font plat-text'>
+      <div className='w-1/4'>
+        <div className='flex flex-col space-y-3 p-10'>
+          <div>
+            <img src={Michael} />
+          </div>
+          <div className=' font-bold'>
+            Michael Wu
+          </div>
+          <SectionSelectors text="About Me" destination='aboutme' setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
+          <SectionSelectors text="Experience" destination='experience' setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
+          <SectionSelectors text="Projects" destination='projects' setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
+          <div className='flex flex-row space-x-4 justify-center'>
+            <FontAwesomeIcon icon={faGithub} size='3x' />
+            <FontAwesomeIcon icon={faLinkedin} size='3x' />
+          </div>
         </div>
       </div>
-      <div className="snap-y snap-mandatory overflow-auto no-scrollbar h-screen bg-gradient-to-r from-blue-600 from-10% to-blue-800 pt-8">
-        <div id="aboutme">
-          <AboutMe />
-        </div>
-        <div id="experience">
-          <Experience />
-        </div>
-        <div id="projects">
-          <Projects />
-        </div>
+      <div id='informationElement' className='w-3/4 p-10 flex flex-col space-y-8 overflow-y-auto hide-scrollbar-y'>
+        <Element id='aboutme'>
+          <div className='space-y-5'>
+            <div>
+              {firstP}
+            </div>
+            <div>
+              {secondP}
+            </div>
+          </div>
+        </Element>
+
+        <Element id="experience">
+          <SectionTitle text="Experiences" />
+        </Element>
+        {
+          experiences.map((experience) => (
+            <Card content={experience} />
+          ))
+        }
+
+        <Element id="projects">
+          <SectionTitle text="Projects" />
+        </Element>
+        {
+          projects.map((project) => (
+            <Card content={project} />
+          ))
+        }
       </div>
     </div>
   )
 }
+
+function SectionSelectors({ text, destination, setSelectedSection, selectedSection }) {
+  const isSelected = destination === selectedSection;
+  return (
+    <Link
+      to={destination}
+      spy={true}
+      smooth={true}
+      duration={500}
+      containerId='informationElement'
+    >
+      <div
+        className={`cursor-pointer ${isSelected ? 'selected' : ''}`}
+        onClick={() => setSelectedSection(destination)}
+      >
+        {text}
+
+      </div>
+    </Link>
+
+  )
+}
+
+function SectionTitle({ text }) {
+  return (
+    <div className='flex flex-row items-center'>
+      <div className='mr-5'>
+        {text}
+      </div>
+      <div className="w-full border-t platinum"></div>
+    </div>
+  )
+}
+
+export default Home
